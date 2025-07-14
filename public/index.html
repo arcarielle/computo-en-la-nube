@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<title>Azure Node Demo</title>
+		<style>
+			body {
+				font-family: system-ui;
+				padding: 2rem;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>🚀 Azure Node.js Demo</h1>
+		<p id="msg">Cargando</p>
+		<script>
+			fetch("/api/hello")
+				.then((r) => r.json())
+				.then((d) => {
+					document.getElementById("msg").textContent = d.message;
+				})
+				.catch(() => {
+					document.getElementById("msg").textContent = "Error en la llamada a la API";
+				});
+		</script>
+	</body>
+</html>
