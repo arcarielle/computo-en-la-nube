@@ -10,7 +10,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 /* Basic API route */
 app.get("/api/hello", (req, res) => {
-	res.json({ message: "Hola desde el Azure App Service ✨" });
+	res.json({ message: "Hola clase de Programación Integrativa ✨" });
 });
 
 /* Fallback to index.html */

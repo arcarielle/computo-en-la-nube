@@ -2,28 +2,86 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
 		<title>Azure Node Demo</title>
-		<style>
-			body {
-				font-family: system-ui;
-				padding: 2rem;
-				text-align: center;
-			}
-		</style>
-	</head>
-	<body>
-		<h1>🚀 Azure Node.js Demo</h1>
-		<p id="msg">Cargando</p>
+
+		<!-- Tailwind – CDN version for quick demos -->
+		<script src="https://cdn.tailwindcss.com"></script>
+
+		<!-- Optional: customise default palette -->
 		<script>
-			fetch("/api/hello")
-				.then((r) => r.json())
-				.then((d) => {
-					document.getElementById("msg").textContent = d.message;
-				})
-				.catch(() => {
-					document.getElementById("msg").textContent = "Error en la llamada a la API";
-				});
+			tailwind.config = {
+				theme: {
+					extend: {
+						colors: {
+							primary: "#2563eb" /* Indigo‑600 */,
+							accent: "#f97316" /* Orange‑500 */,
+						},
+					},
+				},
+			};
+		</script>
+	</head>
+	<body
+		class="min-h-screen flex flex-col items-center justify-center bg-slate-50 text-slate-800 font-sans antialiased p-4"
+	>
+		<!-- Card -->
+		<div class="w-full max-w-md bg-white shadow-lg rounded-xl p-6 space-y-4">
+			<header class="text-center space-y-2">
+				<h1
+					class="text-3xl font-bold text-primary flex items-center justify-center gap-2"
+				>
+					🚀 Demo Azure Node.js
+				</h1>
+				<p class="text-sm text-slate-500">Desplegado desde Azure App Service</p>
+			</header>
+
+			<hr class="border-slate-200" />
+
+			<!-- Message fetched from API -->
+			<div id="msg" class="text-center text-lg font-medium text-accent">
+				Cargando mensaje...
+			</div>
+
+			<!-- CTA buttons -->
+			<div class="flex justify-center gap-3 pt-2">
+				<a
+					href="https://portal.azure.com/"
+					target="_blank"
+					class="rounded-lg bg-primary/90 hover:bg-primary text-white px-4 py-2 transition"
+				>
+					Abrir Portal Azure
+				</a>
+				<button
+					id="refresh"
+					class="rounded-lg border border-primary text-primary hover:bg-primary/10 px-4 py-2 transition"
+				>
+					Recargar
+				</button>
+			</div>
+		</div>
+
+		<footer class="mt-10 text-xs text-slate-400">
+			Hecho con ❤️ y&nbsp;<a
+				class="underline"
+				href="https://tailwindcss.com/"
+				target="_blank"
+				>Tailwind&nbsp;CSS</a
+			>
+		</footer>
+
+		<script>
+			async function load() {
+				try {
+					const r = await fetch("/api/hello");
+					const { message } = await r.json();
+					document.getElementById("msg").textContent = message;
+				} catch {
+					document.getElementById("msg").textContent = "API call failed";
+				}
+			}
+			document.getElementById("refresh").addEventListener("click", load);
+			load();
 		</script>
 	</body>
 </html>
